@@ -56,12 +56,19 @@ jobs:
         EXCLUDED: ${{ secrets.EXCLUDED }}
         EXCLUDED_LANGS: ${{ secrets.EXCLUDED_LANGS }}
         EXCLUDE_FORKED_REPOS: true
+        
+    - name: generate-snake-game-from-github-contribution-grid
+      uses: Platane/snk@v0.0.18
+      with:
+         github_user_name: ${{ github.repository_owner }}
+         gif_out_path: generated_images/github-snake.gif
+         svg_out_path: generated_images/github-snake.svg
 
     # Commits all changed files to the repository
     - name: Commit to the repo
       run: |
-        git config --global user.name "kenny577/github-stats"
-        git config --global user.email "github-stats[bot]@kenny577.github.io"
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
         git add .
         # "echo" returns true so the build succeeds, even if no changed files
         git commit -m 'Update generated files' || echo
